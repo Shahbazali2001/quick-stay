@@ -5,19 +5,17 @@
 @import "tailwindcss";
 
 
-@theme {
+:root {
    --color-primary: #2563EB;
    --color-secondary: #FBBF24;
-
-
-
-
-
-
-
-:root {
    font-family: "Outfit", sans-serif;
 }
+
+
+.font-outfit {
+   font-family: "Outfit", sans-serif !important;
+}
+
 
 .font-playfair {
    font-family: "Playfair", serif !important;
