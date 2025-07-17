@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from "react-router"
 import Navbar from "./components/Navbar"
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 
 
@@ -14,7 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
-      
+      <Footer />  
    </div>
   )
 }
