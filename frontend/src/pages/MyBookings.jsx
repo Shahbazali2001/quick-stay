@@ -50,8 +50,28 @@ const MyBookings = () => {
                     </div>
                 </div>
                 {/* Date & Timings */}
-                <div></div>
+                <div className="flex flex-row md:items-center md:gap-12 mt-3 gap-8">
+                    <div>
+                        <p>Check In :</p>
+                        <p className="text-gray-500 text-sm">{new Date(booking.checkInDate).toDateString()}</p>
+                    </div>
+                    <div>
+                        <p>Check Out :</p>
+                        <p className="text-gray-500 text-sm">{new Date(booking.checkOutDate).toDateString()}</p>
+                    </div>
+                </div>
                 {/* Payment */}
+                <div className="flex flex-col items-start justify-center pt-3">
+                    <div className="flex items-center gap-3">
+                        <div className={`h-3 w-3 rounded-full ${booking.isPaid  ? "bg-green-500" : "bg-red-500"}`}></div>
+                        <p className={`rounded-full ${booking.isPaid ? "text-green-500" : "text-red-500"}`}>
+                            {booking.isPaid ? "Paid" : "Not Paid"}
+                        </p>
+                    </div>
+                    {!booking.isPaid && (
+                        <button className="border border-gray-400 hover:bg-gray-50 transition-all  py-1 px-4 rounded-full cursor-pointer mt-4">Pay Now</button>
+                    )}
+                </div>
            </div>
         ))}
 
