@@ -223,7 +223,7 @@ export const userBookingsDummyData = [
         "guests": 1,
         "status": "pending",
         "paymentMethod": "Pay At Hotel",
-        "isPaid": false,
+        "isPaid": true,
         "createdAt": "2025-04-10T06:41:45.873Z",
         "updatedAt": "2025-04-10T06:41:45.873Z",
         "__v": 0
