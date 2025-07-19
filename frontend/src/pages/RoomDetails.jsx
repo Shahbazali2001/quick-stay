@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { assets, facilityIcons, roomsDummyData } from "../assets/assets";
+import { assets, facilityIcons, roomCommonData, roomsDummyData } from "../assets/assets";
 import StarRating from "../components/StarRating";
 
 const RoomDetails = () => {
@@ -106,9 +106,40 @@ const RoomDetails = () => {
                 
              </div>
              <button type="submit" className="bg-black hove:bg-primary-dull active:scale-95 transition-all text-white rounded-md max-md:w-full max-md:mt-6 md:px-25 py-3 md:py-4 text-base cursor-pointer">
-                Book Now
+                Check Availability
              </button>
           </form>
+
+          <div className="mt-25 space-y-4">
+            {roomCommonData.map((spec, index)=>(
+               <div key={index} className="flex items-start gap-2">
+                  <img src={spec.icon} alt="" className="w-5" />
+                  <div>
+                    <p className="text-base">{spec.title}</p>
+                    <p className="text-gray-500">{spec.description}</p>
+                  </div>
+               </div>
+            ))}
+          </div>
+
+          <div className="max-w-6xl border-y border-gray-300 my-15 py-10 text-gray-500">
+            <p>Guests will be allocated on the ground floor according to availability. You get a comfortable Two bedroom apartment has a true city feeling. The price quoted is for two guest, at the guest slot please mark the number of guests to get the exact price for groups. The Guests will be allocated ground floor according to availability. You get the comfortable two bedroom apartment that has a true city feeling.</p>
+          </div>
+
+          <div className="flex flex-col items-start gap-4">
+              <div className="flex gap-4">
+                <img className="h-14 w-14 rounded-full md:w-18" src={room.hotel.owner.image} alt="" />
+                <div>
+                  <p className="text-lg md:text-xl">Hosted By : {room.hotel.name}</p>
+                  <div className="flex items-center mt-1">
+                    <StarRating rating={room.hotel.rating} />
+                    <p className="ml-2">250+ Reviews</p>
+                  </div>
+                </div>
+              </div>
+              <button className="px-6 py-2.5 mt-4 rounded text-white bg-black cursor-pointer transition-all">Contact Now</button>
+          </div>
+
         </div>
       </div>
     )
