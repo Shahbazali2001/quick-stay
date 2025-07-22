@@ -1,13 +1,42 @@
 import express from "express";
-import "dotenv/config";
 import cors from "cors";
+import { clerkMiddleware } from '@clerk/express'
+import "dotenv/config";
 
+
+// Controllers
+import clerkWebhooks from "./controllers/clerkWebhooks.js";
+
+// Database
+import connectDB from "./configs/dbConnect.js";
+
+
+
+// Initialize App
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Database Connection
+connectDB();
+
+// Middlewares
 app.use(cors());
-// app.use(express.json());
+app.use(express.json());
+app.use(clerkMiddleware());
 
 
 
+//API to Listen Clerk WebHooks
+app.use("/api/clerk", clerkWebhooks);
+
+
+
+
+
+
+
+
+// Root Route (Optional)
 app.get("/", (req, res) => {
     res.send("Hello from QuickStay");
 });
@@ -17,14 +46,7 @@ app.get("/", (req, res) => {
 
 
 
-
-
-
-
-
-
-
-const PORT = process.env.PORT || 3000;
+// Start Server
 app.listen(PORT, () => {
     console.log("Server is running on port 3000");
 });
