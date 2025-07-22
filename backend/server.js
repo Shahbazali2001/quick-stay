@@ -1,14 +1,15 @@
 import express from "express";
 import cors from "cors";
+import connectDB from "./configs/dbConnect.js";
 import { clerkMiddleware } from '@clerk/express'
 import "dotenv/config";
 
 
-// Controllers
+// Controllers Imports
 import clerkWebhooks from "./controllers/clerkWebhooks.js";
 
-// Database
-import connectDB from "./configs/dbConnect.js";
+
+
 
 
 
