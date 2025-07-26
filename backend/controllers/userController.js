@@ -1,5 +1,4 @@
 // GET /api/user
-
 export const getUserData = async (req, res) => {
     try{
         const role = req.user.role;
@@ -11,6 +10,8 @@ export const getUserData = async (req, res) => {
         return res.status(500).json({success: false, message: error.message});
     }
 };
+
+
 
 
 // Store user Recent Searched Cities
