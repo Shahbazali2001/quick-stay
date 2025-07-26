@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { clerkMiddleware } from '@clerk/express'
 import "dotenv/config";
-
+import userRouter from "../routes/userRoutes.js";
 
 // Controllers
 import clerkWebhooks from "../controllers/clerkWebhooks.js";
@@ -23,8 +23,10 @@ app.use(clerkMiddleware());
 
 
 //API to Listen Clerk WebHooks
-app.use("/api/clerk", clerkWebhooks)
+app.use("/api/clerk", clerkWebhooks);
 
+// User Routes
+app.use("/api/user", userRouter);
 
 
 
