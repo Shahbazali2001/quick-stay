@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import { Webhook } from "svix";
+import "dotenv/config";
 
 const clerkWebhooks = async (req, res) =>{
     try{
