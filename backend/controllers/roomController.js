@@ -37,9 +37,6 @@ export const createRoom = async (req, res) => {
   }
 };
 
-
-
-
 // API to get all rooms
 export const getRooms = async (req, res) => {
   try {
@@ -60,19 +57,40 @@ export const getRooms = async (req, res) => {
   }
 };
 
-
-
-
-
-
-// API to get room for specific hotel
+// API to get room for specific hotel owner
 export const getOwnerRooms = async (req, res) => {
   try {
-  } catch (error) {}
+    const hotelData = await Hotel.findOne({ owner: req.auth.userId });
+    const rooms = await Room.find({ hotel: hotelData._id.toString() }).populate(
+      "hotel"
+    );
+    return res
+      .status(200)
+      .json({ rooms, success: true, message: "Rooms Fetched Successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 // API to toggle availability of room
 export const toggleRoomAvailability = async (req, res) => {
   try {
-  } catch (error) {}
+    const { roomId } = req.params;
+    const room = await Room.findById(roomId);
+    if (!room) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Room Not Found" });
+    }
+    room.isAvailable = !room.isAvailable;
+    await room.save();
+    return res
+      .status(200)
+      .json({
+        success: true,
+        message: "Room Availability Toggled Successfully",
+      });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
 };
