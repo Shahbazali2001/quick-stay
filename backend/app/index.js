@@ -8,10 +8,11 @@ import connectCloudinary from "../configs/cloudinary.js";
 import { clerkMiddleware } from '@clerk/express'
 
 
-// Routes
+// Routers
 import userRouter from "../routes/userRoutes.js";
 import hotelRouter from "../routes/hotelRoutes.js";
 import roomRouter from "../routes/roomRoutes.js";
+import bookingRouter from "../routes/bookingRoutes.js";
 
 // Controllers
 import clerkWebhooks from "../controllers/clerkWebhooks.js";
@@ -51,6 +52,8 @@ app.use("/api/hotels", hotelRouter);
 app.use("/api/rooms", roomRouter);
 
 
+// Booking Routes
+app.use("/api/bookings", bookingRouter);
 
 
 
