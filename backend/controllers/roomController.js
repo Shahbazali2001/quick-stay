@@ -37,6 +37,11 @@ export const createRoom = async (req, res) => {
   }
 };
 
+
+
+
+
+
 // API to get all rooms
 export const getRooms = async (req, res) => {
   try {
@@ -57,6 +62,11 @@ export const getRooms = async (req, res) => {
   }
 };
 
+
+
+
+
+
 // API to get room for specific hotel owner
 export const getOwnerRooms = async (req, res) => {
   try {
@@ -71,6 +81,12 @@ export const getOwnerRooms = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+
+
+
+
 
 // API to toggle availability of room
 export const toggleRoomAvailability = async (req, res) => {
@@ -94,3 +110,4 @@ export const toggleRoomAvailability = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
