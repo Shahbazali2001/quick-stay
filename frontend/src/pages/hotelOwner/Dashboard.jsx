@@ -1,9 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Title from '../../components/Title'
-import { assets, dashboardDummyData } from '../../assets/assets'
+import { assets } from '../../assets/assets'
+import { useAppContext } from '../../context/useAppContext'
+import {toast} from 'react-hot-toast'
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState(dashboardDummyData)
+
+  const {user, currency, getToken, axiosInstance} = useAppContext();
+
+  const [dashboardData, setDashboardData] = useState({
+    totalBookings: 0,
+    totalRevenue: 0,
+    bookings: [],
+  })
+
+  const fetchDashboardData = async () => {
+    try{
+      const { data } = await axiosInstance.get('/api/bookings/hotel', {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`
+        }
+      });
+      if(data.success){
+        setDashboardData(data.dashboardData);
+      }else{
+        toast.error(data.message);
+      }
+
+    }catch(error){
+      toast.error(error.message);
+    }  
+  }
+
+
+  useEffect(() => {
+    if(user) fetchDashboardData();
+  }, [user])
+
+
 
   return (
     <div>
@@ -22,7 +56,7 @@ const Dashboard = () => {
               <img src={assets.totalRevenueIcon} alt="" className='max-sm:hidden h-10' />
               <div className='flex flex-col sm:ml-4 font-medium gap-2'>
                 <p className='text-blue-500 text-lg'>Total Revenue</p>
-                <p className='text-neutral-400 text-base'>$ {dashboardData.totalRevenue}</p>
+                <p className='text-neutral-400 text-base'>{currency} {dashboardData.totalRevenue}</p>
               </div>
             </div>
         </div> 
@@ -49,7 +83,7 @@ const Dashboard = () => {
                     <tr key={index} className='border-b border-gray-200'>
                       <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>{booking.user.username}</td>
                       <td className='py-3 px-4 text-gray-700 border-t border-gray-300 max-sm:hidden'>{booking.room.roomType}</td>
-                      <td className='py-3 px-4 text-gray-700 border-t border-gray-300 text-center'>$ {booking.totalPrice}</td>
+                      <td className='py-3 px-4 text-gray-700 border-t border-gray-300 text-center'>{currency} {booking.totalPrice}</td>
                       <td className='py-3 px-4  border-t border-gray-300  flex'>
                         <button className={`py-1 px-3 text-xs rounded-full mx-auto w-20 ${booking.isPaid ? 'bg-green-400 text-white' : 'bg-red-400 text-white'}`}>
                           {booking.isPaid ? 'Completed' : 'Pending'}
