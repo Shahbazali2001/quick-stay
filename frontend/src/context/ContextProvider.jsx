@@ -15,6 +15,34 @@ export const AppProvider = ({ children }) => {
   const [isOwner, setIsOwner] = useState(false);
   const [showHotelReg, setShowHotelReg] = useState(false);
   const [searchedCities, setSearchedCities] = useState([]);
+  const [rooms, setRooms] = useState([]);
+
+
+
+
+  // FetchRooms
+  const fetchRooms = async() => {
+    try{
+      const {data} = await axiosInstance.get("/api/rooms");
+
+      if(data.success){
+        setRooms(data.rooms);
+      }else{
+        toast.error(data.message);
+      }
+
+    }catch(error){
+      toast.error(error.message);
+    }
+  }
+
+
+  useEffect(() => {
+    fetchRooms();
+  }, []);
+
+
+
 
 
 
@@ -50,12 +78,7 @@ export const AppProvider = ({ children }) => {
 
 
 
-
-
-
-
-
-
+  // Values object
   const values = {
     axiosInstance,
     currency,
@@ -67,9 +90,12 @@ export const AppProvider = ({ children }) => {
     showHotelReg,
     setShowHotelReg,
     searchedCities, 
-    setSearchedCities
+    setSearchedCities,
+    rooms,
+    setRooms
   };
 
+  
   return( 
   <AppContext.Provider value={values}>{children}</AppContext.Provider>
   ) 
