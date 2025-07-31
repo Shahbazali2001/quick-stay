@@ -165,3 +165,25 @@ export const getHotelBookings = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+
+// Stripe Payment
+
+export const stripePayment = async (req, res) => {
+  try{
+    const {bookingId} = req.body;
+    const booking = await Booking.findById(bookingId);
+    if(!booking){
+      return res.status(400).json({success: false, message: "Booking Not Found"});
+    }
+    const roomData = await Room.findById(booking.room).populate("hotel");
+    const totalPrice = booking.totalPrice;
+
+    const {origin} = req.headers;
+
+
+  }catch(error){
+    return res.status(500).json({success: false, message: error.message});
+  }
+};
