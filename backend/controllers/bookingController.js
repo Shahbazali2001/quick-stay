@@ -3,6 +3,7 @@ import Booking from "../models/Booking.js";
 import Hotel from "../models/Hotel.js";
 import User from "../models/User.js";
 import transporter from "../configs/nodeMailer.js";
+import stripe from "stripe";
 
 // Function to check availability of room
 
@@ -182,7 +183,34 @@ export const stripePayment = async (req, res) => {
 
     const {origin} = req.headers;
 
+    const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
+    const line_items = [
+      {
+        price_data:{
+          currency: "usd",
+          product_data:{
+              name : roomData.hotel.name,
+          },
+          unit_amount: totalPrice * 100
+        },
+        quantity: 1,
+      }
+    ];
+
+    // Create Checkout Session
+    const session = await stripeInstance.checkout.sessions.create({
+      line_items,
+      mode:"payment",
+      success_url: `${origin}/loader/my-bookings`,
+      cancel_url: `${origin}/my-bookings`,
+      metadata: {
+        bookingId,
+      }
+    });
+
+    return res.status(200).json({success: true, url: session.url});
+   
   }catch(error){
     return res.status(500).json({success: false, message: error.message});
   }
