@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "../configs/dbConnect.js";
 import connectCloudinary from "../configs/cloudinary.js";
+import {stripeWebhooks} from "../controllers/stripeWebhooks.js";
 
 // Middleware Imports
 import { clerkMiddleware } from '@clerk/express'
@@ -29,10 +30,16 @@ connectDB();
 // Cloudinary Connection
 connectCloudinary();
 
+
 // Middlewares Used
 app.use(cors());
 app.use(express.json());
 app.use(clerkMiddleware());
+
+
+// Api to listen stripe webhooks
+app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks);
+
 
 
 
